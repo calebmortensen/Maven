@@ -1,9 +1,11 @@
 package GFG_Maven.GFG_MAven;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,11 +23,14 @@ public class Demo5 {
 	public static void main(String[] args) throws InterruptedException {
 
 		WebDriverManager.chromedriver().setup();
-		// Code for Chrome Security Issue
+		
+		//Code for Chrome Security Issue
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--remote-allow-origins=*");
-		// Add 'options' as argument
+		
+		//Add 'options' as argument
 		WebDriver driver = new ChromeDriver(options);
+			
 		driver.manage().window().maximize();
 		
 		// Waiting 30 seconds for an element to be present on the page, checking
@@ -55,7 +60,23 @@ public class Demo5 {
 		//Thread.sleep(1000); // 1 Second
 		
 		driver.findElement(By.linkText("Gmail")).click();
+		
+		//Alert
+		Alert alert = driver.switchTo().alert();
+		String textOnAlert = alert.getText();
+		System.out.println(textOnAlert);
+		alert.accept();
+		
+		driver.findElement(By.id("ta1")).sendKeys("Arun Motoori");
 
+		
+		//WHILE Example
+		List<WebElement> processImage = (List<WebElement>) driver.findElement(By.xpath("//div[@id='loading']/img"));
+		int count = 0;
+		while(processImage.size()!=0 && count <=10) {
+			Thread.sleep(1000);
+			count++;
+		}
 	}
 
 }
